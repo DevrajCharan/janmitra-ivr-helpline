@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JanMitra Call — Government Scheme Helpline | EPICS 2027, VIT Bhopal</title>
+  <meta name="description" content="JanMitra is an AI-powered toll-free IVR helpline that helps rural citizens discover and apply for government welfare schemes by speaking in their local language." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0d1f3c;
+      --navy2:  #162d54;
+      --saffron:#e07b1a;
+      --saffron2:#f59e0b;
+      --green:  #138808;
+      --white:  #f9f7f3;
+      --muted:  #6b7a93;
+      --border: #dde3ee;
+      --card:   #ffffff;
+      --radius: 10px;
+      --shadow: 0 2px 16px rgba(13,31,60,.09);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--navy); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 62px;
+      border-bottom: 3px solid var(--saffron);
+    }
+    .nav-brand { display: flex; align-items: center; gap: .6rem; }
+    .nav-brand .logo-text { font-size: 1.35rem; font-weight: 800; color: #fff; letter-spacing: .5px; }
+    .nav-brand .logo-sub { font-size: .72rem; color: var(--saffron2); font-weight: 500; letter-spacing: .5px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 1.6rem; }
+    .nav-links a { color: #c9d5f0; font-size: .88rem; font-weight: 500; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--saffron2); }
+    .nav-badge { background: var(--saffron); color: #fff; font-size: .72rem; font-weight: 700; padding: .18rem .7rem; border-radius: 20px; letter-spacing: .3px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 60%, #1a3a6e 100%);
+      padding: 4.5rem 2rem 3.5rem;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-flag-strip { display: flex; justify-content: center; gap: 0; margin-bottom: 1.5rem; }
+    .hero-flag-strip span { display: inline-block; width: 52px; height: 5px; border-radius: 3px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: .8rem; }
+    .hero h1 em { color: var(--saffron2); font-style: normal; }
+    .hero-sub { font-size: 1.05rem; color: #a8bbdc; max-width: 580px; margin: 0 auto 1rem; line-height: 1.7; }
+    .hero-hindi { font-family: 'Noto Sans Devanagari', sans-serif; font-size: .9rem; color: #7a9ccf; margin-bottom: 2rem; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.6rem; border-radius: 8px; font-weight: 700; font-size: .95rem; cursor: pointer; border: none; transition: all .2s; text-decoration: none; }
+    .btn-saffron { background: var(--saffron); color: #fff; }
+    .btn-saffron:hover { background: #c96d0e; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(224,123,26,.4); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.35); }
+    .btn-outline:hover { background: rgba(255,255,255,.1); transform: translateY(-2px); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: #0f6706; transform: translateY(-2px); }
+
+    /* Stats strip */
+    .stats-strip {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      display: flex; justify-content: center; gap: 0;
+      max-width: 700px; margin: 0 auto;
+      overflow: hidden;
+    }
+    .stat-item { flex: 1; padding: 1rem .5rem; text-align: center; border-right: 1px solid rgba(255,255,255,.1); }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--saffron2); line-height: 1; }
+    .stat-lbl { font-size: .72rem; color: #8ba5cc; text-transform: uppercase; letter-spacing: .5px; margin-top: .3rem; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 3.5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: .78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--saffron); margin-bottom: .5rem; }
+    .section-title { font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 800; color: var(--navy); margin-bottom: .6rem; }
+    .section-sub { color: var(--muted); font-size: .95rem; line-height: 1.7; max-width: 600px; }
+    .divider { width: 48px; height: 3px; background: var(--saffron); border-radius: 2px; margin: .8rem 0 1.8rem; }
+
+    /* ── HOW IT WORKS ── */
+    .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .how-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.8rem 1.4rem; text-align: center;
+      box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
+    }
+    .how-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(13,31,60,.13); }
+    .how-icon { font-size: 2rem; margin-bottom: .8rem; }
+    .how-step { font-size: .72rem; font-weight: 700; color: var(--saffron); letter-spacing: 1px; text-transform: uppercase; margin-bottom: .4rem; }
+    .how-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .5rem; color: var(--navy); }
+    .how-card p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── TECH STACK ── */
+    .tech-section { background: var(--navy); color: #fff; }
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1.8rem; }
+    .tech-pill {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px; padding: 1rem; text-align: center;
+    }
+    .tech-pill .t-icon { font-size: 1.5rem; margin-bottom: .5rem; }
+    .tech-pill .t-name { font-size: .85rem; font-weight: 700; color: #e2eaf8; }
+    .tech-pill .t-role { font-size: .72rem; color: #7a9ccf; margin-top: .2rem; }
+
+    /* ── SCHEME DATABASE ── */
+    .db-section { background: #f3f5fb; }
+    .db-controls { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+    .db-search { flex: 1; min-width: 220px; padding: .6rem 1rem; border: 1px solid var(--border); border-radius: 8px; font-size: .9rem; font-family: inherit; outline: none; transition: border-color .2s; }
+    .db-search:focus { border-color: var(--saffron); }
+    .filter-btn { padding: .5rem 1rem; border-radius: 20px; border: 1px solid var(--border); background: #fff; font-size: .82rem; font-weight: 600; cursor: pointer; transition: all .2s; color: var(--navy); }
+    .filter-btn.active, .filter-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    .scheme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+    .scheme-card {
+      background: var(--card); border-radius: var(--radius); border: 1px solid var(--border);
+      box-shadow: var(--shadow); overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
+    }
+    .scheme-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(13,31,60,.12); }
+    .scheme-card-top { padding: 1.2rem 1.2rem .8rem; flex: 1; }
+    .scheme-cat-badge {
+      display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .5px;
+      padding: .2rem .7rem; border-radius: 20px; margin-bottom: .7rem; text-transform: uppercase;
+    }
+    .badge-Agriculture { background: #dcfce7; color: #15803d; }
+    .badge-Health { background: #fee2e2; color: #b91c1c; }
+    .badge-Housing { background: #fef9c3; color: #a16207; }
+    .badge-Pension { background: #ede9fe; color: #6d28d9; }
+    .badge-Women { background: #fce7f3; color: #9d174d; }
+    .badge-Business { background: #dbeafe; color: #1d4ed8; }
+    .badge-Financial { background: #d1fae5; color: #065f46; }
+    .badge-Education { background: #ffedd5; color: #c2410c; }
+    .badge-Disability { background: #f3f4f6; color: #374151; }
+    .badge-Skill { background: #e0f2fe; color: #0369a1; }
+
+    .scheme-name { font-size: .98rem; font-weight: 700; color: var(--navy); margin-bottom: .3rem; line-height: 1.3; }
+    .scheme-hindi { font-family: 'Noto Sans Devanagari', sans-serif; font-size: .8rem; color: var(--muted); margin-bottom: .7rem; }
+    .scheme-row { display: flex; gap: .4rem; margin-bottom: .35rem; align-items: flex-start; }
+    .scheme-row-label { font-size: .72rem; font-weight: 700; color: var(--saffron); text-transform: uppercase; letter-spacing: .4px; min-width: 72px; flex-shrink: 0; padding-top: .05rem; }
+    .scheme-row-val { font-size: .82rem; color: #334155; line-height: 1.4; }
+    .scheme-card-footer { padding: .8rem 1.2rem; border-top: 1px solid var(--border); display: flex; gap: .7rem; align-items: center; }
+    .scheme-helpline { font-size: .78rem; color: var(--muted); }
+    .scheme-helpline strong { color: var(--navy); }
+    .scheme-link { margin-left: auto; font-size: .78rem; font-weight: 700; color: var(--saffron); text-decoration: none; }
+    .scheme-link:hover { text-decoration: underline; }
+
+    .empty-msg { text-align: center; padding: 3rem; color: var(--muted); grid-column: 1 / -1; }
+
+    /* ── ELIGIBILITY CHECKER ── */
+    .checker-section { background: var(--navy); }
+    .checker-section .section-title { color: #fff; }
+    .checker-section .section-sub { color: #8ba5cc; }
+    .checker-section .section-label { color: var(--saffron2); }
+    .checker-section .divider { background: var(--saffron2); }
+
+    .checker-form { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .form-group label { display: block; font-size: .78rem; font-weight: 700; color: #8ba5cc; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .4rem; }
+    .form-group input, .form-group select {
+      width: 100%; padding: .6rem .9rem; border-radius: 7px; border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08); color: #fff; font-size: .9rem; font-family: inherit; outline: none;
+    }
+    .form-group input::placeholder { color: #6b7a93; }
+    .form-group select option { background: var(--navy2); }
+    .checker-submit { grid-column: 1 / -1; display: flex; justify-content: flex-start; }
+    .checker-results { margin-top: 1.8rem; }
+    .result-count { font-size: .9rem; color: var(--saffron2); font-weight: 600; margin-bottom: 1rem; }
+
+    /* ── TEAM ── */
+    table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+    thead tr { background: var(--navy); color: #fff; }
+    thead th { padding: .9rem 1.1rem; text-align: left; font-size: .82rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:hover { background: #f0f4ff; }
+    tbody td { padding: .85rem 1.1rem; font-size: .88rem; color: #334155; vertical-align: top; }
+    td:first-child { font-weight: 700; color: var(--navy); }
+    .role-badge { display: inline-block; font-size: .7rem; font-weight: 700; padding: .18rem .65rem; border-radius: 20px; letter-spacing: .3px; text-transform: uppercase; }
+    .r-lead { background: #fef9c3; color: #a16207; }
+    .r-fe { background: #dbeafe; color: #1d4ed8; }
+    .r-be { background: #dcfce7; color: #15803d; }
+    .r-ai { background: #ede9fe; color: #6d28d9; }
+    .r-tel { background: #ffedd5; color: #c2410c; }
+    .r-qa { background: #f3f4f6; color: #374151; }
+
+    /* ── ROADMAP ── */
+    .roadmap-section { background: #f3f5fb; }
+    .timeline { position: relative; margin-top: 2rem; padding-left: 2rem; border-left: 2px solid var(--border); }
+    .tl-item { margin-bottom: 1.8rem; position: relative; }
+    .tl-dot { position: absolute; left: -2.6rem; width: 18px; height: 18px; background: var(--saffron); border-radius: 50%; border: 3px solid var(--white); top: .1rem; }
+    .tl-week { font-size: .72rem; font-weight: 700; color: var(--saffron); text-transform: uppercase; letter-spacing: .5px; margin-bottom: .2rem; }
+    .tl-title { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .3rem; }
+    .tl-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+    .tl-tag { display: inline-block; font-size: .68rem; font-weight: 700; padding: .15rem .55rem; border-radius: 20px; background: #e2eaf8; color: var(--navy); margin-right: .3rem; margin-top: .35rem; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--navy); color: #7a9ccf; padding: 2.5rem 2rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-brand { font-size: 1.1rem; font-weight: 800; color: #fff; }
+    .footer-brand span { color: var(--saffron2); }
+    .footer-meta { font-size: .82rem; line-height: 1.6; }
+
+    /* ── LOADING ── */
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.3); border-top-color: var(--saffron2); border-radius: 50%; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-bar { display: flex; align-items: center; gap: .8rem; color: var(--muted); padding: 2rem 0; }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+      .stats-strip { flex-wrap: wrap; }
+      .checker-form { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-brand">
+    <div>
+      <div class="logo-text">JanMitra</div>
+      <div class="logo-sub">जन मित्र · EPICS 2027</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#database">Scheme Database</a>
+    <a href="#checker">Eligibility Check</a>
+    <a href="#team">Team</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+  <span class="nav-badge">VIT Bhopal</span>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-flag-strip">
+    <span style="background:#FF9933"></span>
+    <span style="background:#ffffff; opacity:.7"></span>
+    <span style="background:#138808"></span>
+  </div>
+  <h1>Government Schemes<br/>for <em>Every Indian</em></h1>
+  <p class="hero-sub">A toll-free AI voice helpline that explains government welfare schemes in plain spoken Hindi — no smartphone, no internet, no form required.</p>
+  <p class="hero-hindi">बस एक फोन करें — हम आपकी भाषा में जवाब देंगे।</p>
+  <div class="hero-actions">
+    <a href="tel:18001234567" class="btn btn-green">📞 Call Helpline (Demo)</a>
+    <button class="btn btn-saffron" onclick="scrollToSection('database')">View Scheme Database</button>
+    <button class="btn btn-outline" onclick="scrollToSection('checker')">Check My Eligibility</button>
+  </div>
+  <div class="stats-strip" id="statsStrip">
+    <div class="stat-item"><div class="stat-num" id="s-total">—</div><div class="stat-lbl">Schemes</div></div>
+    <div class="stat-item"><div class="stat-num" id="s-cats">—</div><div class="stat-lbl">Categories</div></div>
+    <div class="stat-item"><div class="stat-num" id="s-active">—</div><div class="stat-lbl">Active</div></div>
+    <div class="stat-item"><div class="stat-num" id="s-min">—</div><div class="stat-lbl">Ministries</div></div>
+  </div>
+</div>
+
+<!-- ══ HOW IT WORKS ═══════════════════════════════════════════════════ -->
+<section id="how">
+  <div class="container">
+    <div class="section-label">The Process</div>
+    <div class="section-title">How JanMitra Call Works</div>
+    <div class="divider"></div>
+    <div class="section-sub">Designed for citizens who have never used the internet — just a basic phone call is enough.</div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-icon">📞</div>
+        <div class="how-step">Step 01</div>
+        <h3>Citizen Calls</h3>
+        <p>A farmer or daily-wage worker dials our toll-free number from any phone — 2G feature phone works perfectly.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🎙️</div>
+        <div class="how-step">Step 02</div>
+        <h3>Speaks Naturally</h3>
+        <p>The caller speaks their details in Hindi — age, occupation, income, state. No menus, no "press 1 for…"</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🔊</div>
+        <div class="how-step">Step 03</div>
+        <h3>ASR Converts</h3>
+        <p>Google Speech-to-Text transcribes the audio. The system understands accented Hindi and mixed Hinglish.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🧠</div>
+        <div class="how-step">Step 04</div>
+        <h3>Gemini Matches</h3>
+        <p>Gemini API searches the verified scheme database using RAG — no hallucinations, only database-grounded answers.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🔈</div>
+        <div class="how-step">Step 05</div>
+        <h3>Speaks Back</h3>
+        <p>The answer is converted to speech (TTS) and played back. "You qualify for PM-Kisan. Here's how to apply…"</p>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">📱</div>
+        <div class="how-step">Step 06</div>
+        <h3>SMS Sent</h3>
+        <p>Twilio sends a follow-up SMS with the scheme name, official portal link, and required documents list.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TECH STACK ══════════════════════════════════════════════════════ -->
+<section class="tech-section">
+  <div class="container">
+    <div class="section-label" style="color:var(--saffron2)">Technology Stack</div>
+    <div class="section-title" style="color:#fff">Built With Industry-Grade Tools</div>
+    <div class="divider" style="background:var(--saffron2)"></div>
+    <div class="tech-grid">
+      <div class="tech-pill"><div class="t-icon">⚡</div><div class="t-name">FastAPI</div><div class="t-role">Backend / REST API</div></div>
+      <div class="tech-pill"><div class="t-icon">🗄️</div><div class="t-name">SQLite → Supabase</div><div class="t-role">Scheme Database</div></div>
+      <div class="tech-pill"><div class="t-icon">🤖</div><div class="t-name">Gemini API</div><div class="t-role">LLM / RAG Engine</div></div>
+      <div class="tech-pill"><div class="t-icon">📞</div><div class="t-name">Twilio</div><div class="t-role">IVR / SMS / TwiML</div></div>
+      <div class="tech-pill"><div class="t-icon">🎤</div><div class="t-name">Google ASR</div><div class="t-role">Speech-to-Text</div></div>
+      <div class="tech-pill"><div class="t-icon">🔊</div><div class="t-name">Google TTS</div><div class="t-role">Text-to-Speech</div></div>
+      <div class="tech-pill"><div class="t-icon">🌐</div><div class="t-name">ngrok / Render</div><div class="t-role">Tunnel / Hosting</div></div>
+      <div class="tech-pill"><div class="t-icon">🐍</div><div class="t-name">Python 3.11</div><div class="t-role">Core Language</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SCHEME DATABASE ════════════════════════════════════════════════ -->
+<section id="database" class="db-section">
+  <div class="container">
+    <div class="section-label">Knowledge Base</div>
+    <div class="section-title">Government Scheme Database</div>
+    <div class="divider"></div>
+    <div class="section-sub">All schemes verified from official government portals. This database powers the AI eligibility matching engine.</div>
+
+    <div class="db-controls" style="margin-top:1.5rem">
+      <input type="text" class="db-search" id="searchInput" placeholder="Search by scheme name, category, benefit…" oninput="filterSchemes()" />
+      <button class="filter-btn active" id="filter-All" onclick="setFilter('All')">All</button>
+      <button class="filter-btn" id="filter-Agriculture" onclick="setFilter('Agriculture')">Agriculture</button>
+      <button class="filter-btn" id="filter-Health" onclick="setFilter('Health')">Health</button>
+      <button class="filter-btn" id="filter-Housing" onclick="setFilter('Housing')">Housing</button>
+      <button class="filter-btn" id="filter-Pension" onclick="setFilter('Pension')">Pension</button>
+      <button class="filter-btn" id="filter-Women" onclick="setFilter('Women & Child')">Women & Child</button>
+      <button class="filter-btn" id="filter-Business" onclick="setFilter('Business & Loans')">Business</button>
+    </div>
+
+    <div id="loadingMsg" class="loading-bar"><div class="spinner"></div> Loading scheme database from API…</div>
+    <div class="scheme-grid" id="schemeGrid"></div>
+  </div>
+</section>
+
+<!-- ══ ELIGIBILITY CHECKER ════════════════════════════════════════════ -->
+<section id="checker" class="checker-section">
+  <div class="container">
+    <div class="section-label">Self-Assessment Tool</div>
+    <div class="section-title">Check Your Eligibility</div>
+    <div class="divider"></div>
+    <div class="section-sub">Enter your details below to see which central government schemes you may qualify for.</div>
+
+    <div class="checker-form">
+      <div class="form-group">
+        <label>Age (Years)</label>
+        <input type="number" id="c-age" placeholder="e.g. 35" min="1" max="100" />
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <select id="c-gender">
+          <option value="">Any</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="c-cat">
+          <option value="">All Categories</option>
+          <option>Agriculture</option>
+          <option>Health</option>
+          <option>Housing</option>
+          <option>Pension</option>
+          <option>Women & Child</option>
+          <option>Business & Loans</option>
+          <option>Financial Inclusion</option>
+          <option>Education</option>
+          <option>Disability</option>
+          <option>Skill & Employment</option>
+        </select>
+      </div>
+      <div class="checker-submit">
+        <button class="btn btn-saffron" onclick="runChecker()">Find My Schemes →</button>
+      </div>
+    </div>
+
+    <div class="checker-results" id="checkerResults" style="display:none">
+      <div class="result-count" id="resultCount"></div>
+      <div class="scheme-grid" id="checkerGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TEAM ═══════════════════════════════════════════════════════════ -->
+<section id="team">
+  <div class="container">
+    <div class="section-label">DSN3099 — EPICS 2026–27</div>
+    <div class="section-title">Team JanMitra — VIT Bhopal</div>
+    <div class="divider"></div>
+    <div class="section-sub">A 6-member cross-functional team with clear domain ownership to ensure parallel development and zero bottlenecks.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Student Name</th>
+          <th>Role</th>
+          <th>Core Responsibilities</th>
+          <th>Key Technologies</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Devraj Charan</td>
+          <td><span class="role-badge r-lead">Team Lead</span></td>
+          <td>System architecture, Twilio IVR orchestration, TwiML call flow, end-to-end integration</td>
+          <td>Twilio, ngrok, Python</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Kajal Pareek</td>
+          <td><span class="role-badge r-fe">Frontend & AI</span></td>
+          <td>Web interface, landing page, admin dashboard for scheme entry, Gemini prompt engineering</td>
+          <td>HTML/CSS/JS, Gemini API</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Tarun Yadav</td>
+          <td><span class="role-badge r-tel">Telephony & Speech</span></td>
+          <td>ASR/TTS pipeline, audio format handling (8 kHz G.711), latency optimization</td>
+          <td>Google Cloud Speech, Whisper</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Yash Burad</td>
+          <td><span class="role-badge r-be">Backend API</span></td>
+          <td>FastAPI server, webhook endpoints, session state management, REST API design</td>
+          <td>FastAPI, Python, uvicorn</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Suryansh Raghuwanshi</td>
+          <td><span class="role-badge r-ai">Database & RAG</span></td>
+          <td>Schema design, eligibility decision trees, data ingestion, ChromaDB vector search</td>
+          <td>SQLite, Supabase, ChromaDB</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Utsang Kumar Jain</td>
+          <td><span class="role-badge r-qa">QA & Deployment</span></td>
+          <td>Field usability testing, cloud deployment, EPICS logbook, final report formatting</td>
+          <td>Render, Vercel, Railway</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ ROADMAP ════════════════════════════════════════════════════════ -->
+<section id="roadmap" class="roadmap-section">
+  <div class="container">
+    <div class="section-label">Semester Plan</div>
+    <div class="section-title">14-Week Execution Roadmap</div>
+    <div class="divider"></div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 2rem">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 1–2</div>
+          <div class="tl-title">Literature Review & Scope</div>
+          <div class="tl-desc">Analyze ICT4D systems (Avaaj Otalo, CGNet Swara). Finalize problem statement and signed topic approval.</div>
+          <div><span class="tl-tag">Deliverable: Lit Review</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 3–4</div>
+          <div class="tl-title">Database Schema & Data Curation</div>
+          <div class="tl-desc">Design 24-column scheme schema. Populate 20+ schemes from official portals. Export CSV/Excel for supervisor review.</div>
+          <div><span class="tl-tag">Deliverable: SQLite DB + Excel</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 5–6</div>
+          <div class="tl-title">Backend API & Eligibility Engine</div>
+          <div class="tl-desc">FastAPI server with /schemes, /match, /search, /stats endpoints. Gemini RAG pipeline integrated and tested.</div>
+          <div><span class="tl-tag">Deliverable: Working API</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 7–8</div>
+          <div class="tl-title">Twilio IVR & First Call</div>
+          <div class="tl-desc">Set up Twilio number, TwiML call flow, webhook integration via ngrok. First live incoming call prototype.</div>
+          <div><span class="tl-tag">Deliverable: Working Call Demo</span></div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 9–10</div>
+          <div class="tl-title">Voice Pipeline (ASR → LLM → TTS)</div>
+          <div class="tl-desc">Caller speech → Whisper/Google ASR → Gemini matching → TTS audio response → Twilio playback. Full loop tested.</div>
+          <div><span class="tl-tag">Deliverable: End-to-end Voice</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 11–12</div>
+          <div class="tl-title">SMS + Usability Testing</div>
+          <div class="tl-desc">Post-call SMS confirmation with scheme link. Field test with 5–10 real users. Document latency and error rates.</div>
+          <div><span class="tl-tag">Deliverable: Field Feedback Report</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-week">Week 13–14</div>
+          <div class="tl-title">Deployment & Final Submission</div>
+          <div class="tl-desc">Backend on Render/Railway. Frontend on Vercel. Twilio webhooks updated. Final report, presentation, record book.</div>
+          <div><span class="tl-tag">Deliverable: Live Deployment</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Jan<span>Mitra</span> Call</div>
+      <div style="font-size:.8rem; margin-top:.3rem">DSN3099 — Engineering Projects in Community Service (EPICS)</div>
+    </div>
+    <div class="footer-meta">
+      VIT Bhopal University · Fall Semester 2026–27<br/>
+      Broad Area: ICT for Social Welfare · Digital Access to Government Services<br/>
+      Database: 22 Central Schemes · API v2.0 · Python / FastAPI / SQLite
+    </div>
+  </div>
+</footer>
+
+<script>
+  const API = 'http://localhost:8000';
+  let allSchemes = [];
+  let activeFilter = 'All';
+
+  // ── Category → badge class mapping ──────────────────────────────────
+  function badgeClass(cat) {
+    if (!cat) return 'badge-Financial';
+    if (cat.includes('Agri'))   return 'badge-Agriculture';
+    if (cat.includes('Health')) return 'badge-Health';
+    if (cat.includes('Hous'))   return 'badge-Housing';
+    if (cat.includes('Pens'))   return 'badge-Pension';
+    if (cat.includes('Women'))  return 'badge-Women';
+    if (cat.includes('Busi'))   return 'badge-Business';
+    if (cat.includes('Fin'))    return 'badge-Financial';
+    if (cat.includes('Edu'))    return 'badge-Education';
+    if (cat.includes('Dis'))    return 'badge-Disability';
+    if (cat.includes('Skill'))  return 'badge-Skill';
+    return 'badge-Financial';
+  }
+
+  function renderCard(s) {
+    const ageStr = s.age_max >= 990
+      ? `${s.age_min}+ years`
+      : `${s.age_min}–${s.age_max} years`;
+    return `
+      <div class="scheme-card">
+        <div class="scheme-card-top">
+          <span class="scheme-cat-badge ${badgeClass(s.category)}">${s.category}</span>
+          <div class="scheme-name">${s.scheme_name}</div>
+          <div class="scheme-hindi">${s.hindi_name || ''}</div>
+          <div class="scheme-row"><span class="scheme-row-label">Ministry</span><span class="scheme-row-val">${s.ministry || '—'}</span></div>
+          <div class="scheme-row"><span class="scheme-row-label">Benefit</span><span class="scheme-row-val">${s.benefit_amount || s.benefits?.substring(0,80)+'…' || '—'}</span></div>
+          <div class="scheme-row"><span class="scheme-row-label">Age</span><span class="scheme-row-val">${ageStr}</span></div>
+          <div class="scheme-row"><span class="scheme-row-label">Income</span><span class="scheme-row-val">${s.income_limit || 'No limit'}</span></div>
+          <div class="scheme-row"><span class="scheme-row-label">Docs</span><span class="scheme-row-val">${s.documents_required?.substring(0,90) || '—'}…</span></div>
+        </div>
+        <div class="scheme-card-footer">
+          <div class="scheme-helpline">☎ <strong>${s.helpline || 'See portal'}</strong></div>
+          <a class="scheme-link" href="${s.portal_url || '#'}" target="_blank" rel="noopener">Official Portal ↗</a>
+        </div>
+      </div>`;
+  }
+
+  function renderGrid(schemes, containerId) {
+    const grid = document.getElementById(containerId);
+    if (!schemes.length) {
+      grid.innerHTML = '<div class="empty-msg">No schemes match your criteria.</div>';
+      return;
+    }
+    grid.innerHTML = schemes.map(renderCard).join('');
+  }
+
+  function filterSchemes() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    let filtered = allSchemes;
+    if (activeFilter !== 'All') filtered = filtered.filter(s => s.category === activeFilter);
+    if (q) filtered = filtered.filter(s =>
+      (s.scheme_name||'').toLowerCase().includes(q) ||
+      (s.hindi_name||'').toLowerCase().includes(q) ||
+      (s.category||'').toLowerCase().includes(q) ||
+      (s.benefits||'').toLowerCase().includes(q) ||
+      (s.benefit_amount||'').toLowerCase().includes(q) ||
+      (s.ministry||'').toLowerCase().includes(q)
+    );
+    renderGrid(filtered, 'schemeGrid');
+  }
+
+  function setFilter(cat) {
+    activeFilter = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    const id = 'filter-' + cat.split(' ')[0];
+    const btn = document.getElementById(id) || document.getElementById('filter-All');
+    if (btn) btn.classList.add('active');
+    filterSchemes();
+  }
+
+  // ── Load schemes from API ────────────────────────────────────────────
+  async function loadSchemes() {
+    try {
+      const res = await fetch(API + '/schemes');
+      allSchemes = await res.json();
+      document.getElementById('loadingMsg').style.display = 'none';
+      renderGrid(allSchemes, 'schemeGrid');
+    } catch {
+      // API offline — render inline static fallback
+      document.getElementById('loadingMsg').innerHTML =
+        '<span style="color:#e07b1a">⚠ Backend offline. Showing embedded data. Run: <code>uvicorn main:app --reload</code></span>';
+      allSchemes = EMBEDDED_SCHEMES;
+      setTimeout(() => {
+        document.getElementById('loadingMsg').style.display = 'none';
+        renderGrid(allSchemes, 'schemeGrid');
+      }, 1800);
+    }
+  }
+
+  // ── Load stats ───────────────────────────────────────────────────────
+  async function loadStats() {
+    try {
+      const res = await fetch(API + '/stats');
+      const d = await res.json();
+      document.getElementById('s-total').textContent  = d.total_schemes;
+      document.getElementById('s-cats').textContent   = d.categories;
+      document.getElementById('s-active').textContent = d.active_schemes;
+      document.getElementById('s-min').textContent    = d.ministries_covered;
+    } catch {
+      document.getElementById('s-total').textContent  = '22';
+      document.getElementById('s-cats').textContent   = '10';
+      document.getElementById('s-active').textContent = '22';
+      document.getElementById('s-min').textContent    = '10';
+    }
+  }
+
+  // ── Eligibility checker ─────────────────────────────────────────────
+  async function runChecker() {
+    const age    = document.getElementById('c-age').value;
+    const gender = document.getElementById('c-gender').value;
+    const cat    = document.getElementById('c-cat').value;
+    if (!age) { alert('Please enter your age.'); return; }
+
+    let results = allSchemes.filter(s => {
+      const ageOk = parseInt(age) >= s.age_min && parseInt(age) <= s.age_max;
+      const genderOk = !gender || s.gender === 'All' || s.gender === gender;
+      const catOk = !cat || s.category === cat;
+      return ageOk && genderOk && catOk;
+    });
+
+    document.getElementById('checkerResults').style.display = 'block';
+    document.getElementById('resultCount').textContent =
+      `Found ${results.length} scheme(s) that may match your profile. Please verify eligibility on the official portal.`;
+    renderGrid(results, 'checkerGrid');
+    document.getElementById('checkerResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── Embedded fallback data (subset) ─────────────────────────────────
+  const EMBEDDED_SCHEMES = [
+    { id:1, scheme_name:"PM-Kisan Samman Nidhi", hindi_name:"प्रधानमंत्री किसान सम्मान निधि", ministry:"Ministry of Agriculture & Farmers Welfare", category:"Agriculture", benefit_amount:"Rs.6,000 per year", benefits:"Direct income support", age_min:18, age_max:70, income_limit:"Land up to 2 hectares", gender:"All", documents_required:"Aadhaar, Land Records, Bank Passbook", helpline:"155261", portal_url:"https://pmkisan.gov.in" },
+    { id:2, scheme_name:"Ayushman Bharat PM-JAY", hindi_name:"आयुष्मान भारत", ministry:"Ministry of Health & Family Welfare", category:"Health", benefit_amount:"Rs.5 Lakh per family/year", benefits:"Cashless health insurance", age_min:0, age_max:999, income_limit:"SECC 2011 / BPL", gender:"All", documents_required:"Aadhaar, Ration Card", helpline:"14555", portal_url:"https://pmjay.gov.in" },
+    { id:3, scheme_name:"PM Awas Yojana - Urban", hindi_name:"प्रधानमंत्री आवास योजना", ministry:"Ministry of Housing & Urban Affairs", category:"Housing", benefit_amount:"Subsidy up to Rs.2.35 Lakh", benefits:"Home loan interest subsidy", age_min:21, age_max:999, income_limit:"EWS/LIG/MIG income slabs", gender:"All", documents_required:"Aadhaar, Income proof, Property docs", helpline:"1800-11-6163", portal_url:"https://pmaymis.gov.in" },
+    { id:4, scheme_name:"Atal Pension Yojana", hindi_name:"अटल पेंशन योजना", ministry:"Ministry of Finance / PFRDA", category:"Pension", benefit_amount:"Rs.1,000–5,000/month after 60", benefits:"Guaranteed pension", age_min:18, age_max:40, income_limit:"Unorganized sector", gender:"All", documents_required:"Aadhaar, Bank account", helpline:"1800-110-069", portal_url:"https://www.npscra.nsdl.co.in" },
+    { id:5, scheme_name:"PM Mudra Yojana", hindi_name:"प्रधानमंत्री मुद्रा योजना", ministry:"Ministry of Finance / SIDBI", category:"Business & Loans", benefit_amount:"Up to Rs.10 Lakh (no collateral)", benefits:"Collateral-free micro-enterprise loans", age_min:18, age_max:65, income_limit:"Non-corporate enterprise", gender:"All", documents_required:"Aadhaar, PAN, Business proof", helpline:"1800-180-1111", portal_url:"https://www.mudra.org.in" },
+    { id:6, scheme_name:"Sukanya Samriddhi Yojana", hindi_name:"सुकन्या समृद्धि योजना", ministry:"Ministry of Finance", category:"Women & Child", benefit_amount:"~8.2% p.a. interest, tax-free", benefits:"Girl child education savings", age_min:0, age_max:10, income_limit:"No income limit", gender:"Female", documents_required:"Birth certificate, Aadhaar of guardian", helpline:"1800-266-6868", portal_url:"https://www.india.gov.in/sukanya-samriddhi-yojna" },
+    { id:7, scheme_name:"PM Kaushal Vikas Yojana 4.0", hindi_name:"प्रधानमंत्री कौशल विकास योजना", ministry:"Ministry of Skill Development", category:"Skill & Employment", benefit_amount:"Free training + Rs.8,000 reward", benefits:"Free skill training + placement", age_min:15, age_max:45, income_limit:"Family income < Rs.3 Lakh preferred", gender:"All", documents_required:"Aadhaar, Educational certificates", helpline:"1800-123-9626", portal_url:"https://www.pmkvyofficial.org" },
+    { id:8, scheme_name:"MGNREGA", hindi_name:"महात्मा गांधी रोजगार गारंटी", ministry:"Ministry of Rural Development", category:"Skill & Employment", benefit_amount:"100 days/year @ Rs.204–357/day", benefits:"Rural employment guarantee", age_min:18, age_max:999, income_limit:"Rural households", gender:"All", documents_required:"Job Card, Aadhaar, Bank account", helpline:"1800-111-555", portal_url:"https://nregs.nic.in" },
+    { id:9, scheme_name:"Pradhan Mantri Jan Dhan Yojana", hindi_name:"प्रधानमंत्री जन-धन योजना", ministry:"Ministry of Finance", category:"Financial Inclusion", benefit_amount:"Zero-balance account + Rs.2 Lakh insurance", benefits:"Basic banking for unbanked", age_min:10, age_max:999, income_limit:"No income limit", gender:"All", documents_required:"Aadhaar or any OVD", helpline:"1800-11-0001", portal_url:"https://pmjdy.gov.in" },
+    { id:10, scheme_name:"PM Fasal Bima Yojana", hindi_name:"प्रधानमंत्री फसल बीमा योजना", ministry:"Ministry of Agriculture & Farmers Welfare", category:"Agriculture", benefit_amount:"Full sum insured (crop-specific)", benefits:"Crop insurance against natural calamities", age_min:18, age_max:999, income_limit:"Farmers with notified crops", gender:"All", documents_required:"Aadhaar, Land records, Sowing certificate", helpline:"14447", portal_url:"https://pmfby.gov.in" },
+  ];
+
+  // ── Boot ─────────────────────────────────────────────────────────────
+  loadStats();
+  loadSchemes();
+</script>
+</body>
+</html>
