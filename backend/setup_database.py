@@ -310,6 +310,12 @@ def create_database():
 
     conn.commit()
 
+    # Indexes per ARCHITECTURE.md
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_category ON schemes(category)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_gender ON schemes(gender)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_age ON schemes(age_min, age_max)')
+    conn.commit()
+
     # Export to CSV
     csv_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'janmitra_schemes.csv')
     df = pd.read_sql_query("SELECT * FROM schemes", conn)

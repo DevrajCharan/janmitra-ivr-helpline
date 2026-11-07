@@ -1,7 +1,6 @@
 /**
  * checker.js — JanMitra Citizen Portal
- * 4-step eligibility wizard (UI only — Phase 1).
- * Phase 2 will POST collected data to /api/match.
+ * 4-step eligibility wizard backed by the live matching API.
  *
  * Steps:
  *   1. Age
@@ -9,7 +8,7 @@
  *   3. Gender
  *   4. Category (interest area)
  *
- * On completion the wizard filters SCHEMES_DATA locally and shows matched cards.
+ * On completion the wizard posts collected values and shows matched cards.
  */
 
 'use strict';
@@ -167,34 +166,28 @@ function wizardBack() {
   if (wizardStep > 1) goToStep(wizardStep - 1);
 }
 
-/**
- * Run the local eligibility filter against SCHEMES_DATA and display results.
- * Phase 2: replace this with a POST to /api/match.
- */
-function submitWizard() {
+/** Submit the collected profile to the live eligibility API and display results. */
+async function submitWizard() {
   const { age, income_annual, gender, category } = wizardData;
-
-  /* Eligibility logic (mirrors matching.py from ARCHITECTURE.md):
-   *   age >= scheme.age_min
-   *   AND age <= scheme.age_max (999 = no upper limit)
-   *   AND (income_annual <= scheme.income_annual_max OR income_annual_max IS NULL)
-   *   AND (scheme.gender = "All" OR scheme.gender = requested gender)
-   *   AND (category is blank OR scheme.category = requested category)
-   */
-  const matched = SCHEMES_DATA.filter((s) => {
-    if (age !== null) {
-      if (age < s.age_min) return false;
-      if (s.age_max < 999 && age > s.age_max) return false;
-    }
-    if (income_annual !== null && s.income_annual_max !== null) {
-      if (income_annual > s.income_annual_max) return false;
-    }
-    if (gender && s.gender !== 'All' && s.gender !== gender) return false;
-    if (category && s.category !== category) return false;
-    return true;
-  });
-
-  showWizardResults(matched);
+  const nextButton = document.getElementById('wizardNextBtn');
+  if (nextButton) nextButton.disabled = true;
+  clearWizardError();
+  try {
+    const apiBase = window.API_BASE_URL || '';
+    const response = await fetch(`${apiBase}/api/match`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ age, income_annual, gender: gender || null, category: category || null }),
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.detail || 'Request failed');
+    showWizardResults(payload.schemes || []);
+  } catch (error) {
+    console.error('Unable to match schemes', error);
+    showWizardError('Unable to find schemes. Please try again. / योजनाएं खोजने में समस्या हुई।');
+  } finally {
+    if (nextButton) nextButton.disabled = false;
+  }
 }
 
 /**
@@ -273,4 +266,3 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('keydown', wizardKeyHandler);
   });
 });
-
