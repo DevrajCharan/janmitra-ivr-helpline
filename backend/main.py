@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 from db import get_categories_with_count, get_scheme_by_id, search_schemes
 from matching import match_schemes
+from chatbot import router as chatbot_router
 
 app = FastAPI(title="JanMitra API", version="2.0.0")
 app.add_middleware(
@@ -15,6 +16,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(chatbot_router)
 
 
 class MatchRequest(BaseModel):
@@ -26,7 +28,10 @@ class MatchRequest(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"project": "JanMitra", "endpoints": ["/api/schemes", "/api/match", "/api/categories"]}
+    return {
+        "project": "JanMitra",
+        "endpoints": ["/api/schemes", "/api/match", "/api/categories", "/api/chat"],
+    }
 
 
 @app.get("/api/schemes")

@@ -5,8 +5,15 @@ from typing import Any, Optional
 
 
 def get_db_connection() -> sqlite3.Connection:
-    default_path = Path(__file__).resolve().parent.parent / "data" / "janmitra_schemes.db"
-    connection = sqlite3.connect(Path(os.getenv("DB_PATH", str(default_path))))
+    backend_dir = Path(__file__).resolve().parent
+    default_path = backend_dir.parent / "data" / "janmitra_schemes.db"
+    db_env = os.getenv("DB_PATH")
+    if db_env:
+        candidate = Path(db_env)
+        db_path = candidate if candidate.is_file() else (backend_dir / candidate).resolve()
+    else:
+        db_path = default_path
+    connection = sqlite3.connect(db_path)
     connection.row_factory = sqlite3.Row
     return connection
 
