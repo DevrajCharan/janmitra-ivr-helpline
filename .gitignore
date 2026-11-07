@@ -25,3 +25,8 @@ venv.bak/
 
 # Logs
 *.log
+
+# Audio artifacts
+*.mp3
+static/tts/
+backend/output_response.mp3
