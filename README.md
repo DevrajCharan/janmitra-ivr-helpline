@@ -62,6 +62,7 @@ JanMitra/
 │   ├── db.py                # Database connection, search, and pagination
 │   ├── matching.py          # Deterministic eligibility matching engine
 │   ├── ai_pipeline.py       # Speech transcription, Gemini RAG, and TTS synthesis
+│   ├── chatbot.py           # Bilingual Ollama web chatbot & scheme retrieval
 │   ├── test_pipeline.py     # Local CLI runner for the AI speech pipeline
 │   ├── setup_database.py    # Database initialization & index creation
 │   ├── sample_hindi.wav     # Sample Hindi voice recording for testing
@@ -72,11 +73,13 @@ JanMitra/
 │   ├── css/
 │   │   ├── base.css         # Custom properties, typography & reset
 │   │   ├── layout.css       # Header, navigation, footer & grid
-│   │   └── components.css   # Cards, wizard steps, badges & modal
+│   │   ├── components.css   # Cards, wizard steps, badges & modal
+│   │   └── chat.css         # Responsive floating chat widget styles
 │   └── js/
 │       ├── lang.js          # Bilingual (EN/HI) translation system
 │       ├── schemes.js       # Live search, category filters & details modal
-│       └── checker.js       # 4-step eligibility self-assessment wizard
+│       ├── checker.js       # 4-step eligibility self-assessment wizard
+│       └── chat.js          # Bilingual chat widget logic (no innerHTML)
 │
 ├── data/
 │   ├── janmitra_schemes.db  # SQLite database with 22 verified schemes
@@ -99,6 +102,7 @@ Base URL: `http://localhost:8000`
 | `GET` | `/api/schemes/{id}` | Full details for a single scheme row by ID (returns 404 if not found). |
 | `GET` | `/api/categories` | Distinct categories with active scheme counts. |
 | `POST` | `/api/match` | Deterministic matching against citizen profile (`age`, `income_annual`, `gender`, `category`). |
+| `POST` | `/api/chat` | Bilingual conversational assistant proxying to local Ollama with SQLite context grounding. |
 
 ---
 
@@ -107,6 +111,7 @@ Base URL: `http://localhost:8000`
 ### 1. Prerequisites
 - Python 3.11+
 - Git
+- [Ollama](https://ollama.com/) (for local web chatbot: `ollama pull gemma2:2b`)
 
 ### 2. Install Dependencies
 ```bash
@@ -119,10 +124,12 @@ Copy `.env.example` to `.env` in the project root or backend folder:
 ```bash
 cp .env.example .env
 ```
-Add your free Gemini API key from [Google AI Studio](https://aistudio.google.com/):
+Add your free Gemini API key from [Google AI Studio](https://aistudio.google.com/) and configure Ollama:
 ```env
 GEMINI_API_KEY="your_api_key_here"
 GEMINI_MODEL="gemini-2.5-flash"
+OLLAMA_BASE_URL="http://localhost:11434"
+OLLAMA_MODEL="gemma2:2b"
 ```
 
 ### 4. Run the Backend Server
